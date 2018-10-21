@@ -1,0 +1,24 @@
+  #Configuring custom metrics:
+ 
+*In order to allow custom metrics to be written to CloudWatch, you must assign a CloudWatch full access role to the EC2 instance using the custom metrics.
+
+*RAM utilization for example must be set up as a custom metric
+
+*yum install -y perl-Switch perl-DateTime perl-Sys-Syslog perl-LWP-Protocol-https
+
+*mkdir /CloudWatch && cd /CloudWatch
+
+*wget http://aws-cloudwatch.s3.amazonaws.com/downloads/CloudWatchMonitoringScripts-1.2.1.zip
+
+*unzip CloudWatchMonitoringScripts-v1.2.1.zip
+
+*rm -fr CloudWatchMonitoringScripts-v1.2.1.zip
+
+*cd aws-scripts-mon
+
+*./mon-put-instance-data.pl --mem-util --verify --verbose (dry run no data will be sent to CloudWatch)
+
+*./mon-put-instance-data.pl --mem-util --mem-used --mem-avail (set this up on 1/5 minute cron job)
+
+*Set Cron job to run regulary (/5 * * * ec2-user /CloudWatch/mon-put-instance-data.pl --mem-util --mem-used)
+
